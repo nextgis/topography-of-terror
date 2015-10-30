@@ -1,0 +1,39 @@
+.legendPanel {
+    position: absolute;
+    z-index: 1000;
+    left: 5px;
+    bottom: 5px;
+    background: #ffffff;
+    padding: 5px;
+    border: 1px solid #888;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+
+.legend {
+    width: 250px;
+    height: 152px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAACYCAAAAADou6uwAAAEsElEQVR42u3ZH3QjbRTH8S8MBAqFQKAwUCgsBAqBQqBQKBQKCwsDC4FCYSHQcwoLhUKhsLAQWAgECoVAIbBQKAQWAoFAoBAIBAIDz0KSmedJnknznrfT95w3v2szvZ3MZ/7ce2cGs7WB6KKLLrrooosuuuiiiy666KKLLrrooosuuuiiiy666KKLLrrooosuuuiiiy666KKLLrroom8lPX5oWPHrdYvoJzhRGG0NfRy4dDpbQ//D1tLbQHUwj8pW0X8CtcVCdavo18DNdtIjoLmd9GPgOZP+fPM1iq6aY2vVqJPE87q8p0bL6pOjVuPJ3vBrxwq7n07a32tR7abZzZ8eAq8Z9Ob+vOoHyS1hpgWrG7Sz816Ar+mmLoDf1s8e2E2lGCf/9TnptSf9vOnAjvHSJ+fW3p0uTuhve58b2XkdIHLvK+ugTtyGOpivrtsrg1a+9D5Q9tOrQFCtN67PA+BTnJKSeFqfl03vArthGIZhWEjpQ4C9s8vri2OAvWmu9Efg3EtvAaXZwksI3KWk88UcYIwxzaW8xib0VtpXqg692p4duk4JuM6VfgvUffR4H3aH8/XDApTGPpKZhst50w3ot0BrhW6+p+XgF1DJle70Npv+A/ie/OEyOe3L9JuVvMYG9BrQXaXbUYJSrvTDdB9cehkKU6deX3jp+7CT5j0D3zagV4DJevohMM2RHhcgiH30HTi02jBw6iPFwFG6OADONqAXITTr6Vnr34vedQq8RR8Cx9bUARz4SD3gLE17Aj6tlsPB4NyhD5Mj+d/Rf7qDR0pvsxKhj/64Li/zcfjBKq5LxGnr25fq/o7b7/OgR8C9j36/uudHPvrdal71bXodePDR+xdF36iTBz0EXnz0O+AgsqP2nEUvu3ndt+kVYOyh90qzOS6sVqu7+dIHwE7soz8uFfIkPBd8LSsv616fBFYNtei9ElC+H37EvX4HnBgfvZdcuevpvaUtZOU5Ff4XcOWhXwLH8ceUuYr9nsKhx0lJX0/aNM+hHwI9D70MjD6mwv8B6HvpZs+ZdTJJm+bZ9GfnSkmJY+wBLl/6mTuPOPRaMpysp9c3y7PpJ+mTvkN8BYrJELWXIz2+xOoxy/Qe6dOaMcZM+376uLSU13uL3nAeFu2za11Brwf5Nbfe7RE4w+rSQ+slwFl//tboYrfgp5sfG+Ut6JPf7V0IWukAWAaanc7AGHMOlPvGmEmzlGNfr8w6aDeTHh/NPkR9qlbCACCDHlc2yVvQ62RE0RjT3wGC4+goAA5yo4cAxUeTSTeTz86+nWTQzeRsg7wFPcqik1xBs6h3cqMfQuHz8qfFL+5w1zldjJXFLw/zftsLFo+vvrxSVt7VfMvr6aZ7PLsYT15ML/gXnz7X0rsPPd94Nxi7K0ad+5vG09CuawPfuXgzbzgYzc++Z0hsJPeJGT79uH0YGWPMaHlf3vuN7AfHm/QP/AQhuuiiiy76e0Y7ipqenhpFl/97+geF6KKLLrrooosuuuiiiy666KKLLrrooosuuuiiiy666KKLLrrooosuuuiiiy666KKLLrrooosuuuiiiy666KKLLrrooosuuuiiiy666KKLLrro/zD+AgoR4Ra7CcCMAAAAAElFTkSuQmCC) no-repeat;
+}
+
+.history-list {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.history-list-elem {
+    cursor: pointer;
+    color: #21392C;
+    padding: 4px 6px;
+}
+
+.history-list-elem::after {
+    content:' ››';
+    color: #A2202A;
+}
+
+a.map-popup-link {
+    font-weight: bold;
+    color: #A2202A;
+}

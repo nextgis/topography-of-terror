@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Quick Start Guide Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.7/leaflet.css" />
+</head>
+<body>
+	<div id="map" style="width: 600px; height: 400px"></div>
+
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.7/leaflet.js"></script>
+	<script>
+		var tilesUrl = 'http://176.9.38.120/memo_tiles/webmercator/{z}/{x}/{y}.png',
+			//Resource id здесь указывается для стиля MapServer
+			concCampsLayer = 'http://memo.gis.to/resource/3/tms?z={z}&x={x}&y={y}',
+			prisonsLayer = 'http://memo.gis.to/resource/5/tms?z={z}&x={x}&y={y}',
+			burialPlacesLayer = 'http://memo.gis.to/resource/5/tms?z={z}&x={x}&y={y}',
+			workingCampsLayer = 'http://memo.gis.to/resource/5/tms?z={z}&x={x}&y={y}',
+			executionPlacesLayer = 'http://memo.gis.to/resource/5/tms?z={z}&x={x}&y={y}',
+			attrib = '&copy; Map tiles by <a href="http://nextgis.ru/">NextGIS</a>, ' + 
+					 'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>' + 
+					 ' | <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+		
+		var main = L.tileLayer(tilesUrl, {minZoom: 13, maxZoom: 17, attribution: attrib, tms: false}),
+			concentrationCamps = L.tileLayer(concCampsLayer, {minZoom: 13, maxZoom: 17, attribution: attrib}),
+			burialPlaces = L.tileLayer(burialPlacesLayer, {minZoom: 13, maxZoom: 17, attribution: attrib}),
+			workingCamps = L.tileLayer(workingCampsLayer, {minZoom: 13, maxZoom: 17, attribution: attrib}),
+			prisons = L.tileLayer(prisonsLayer, {minZoom: 13, maxZoom: 17, attribution: attrib}),
+			executionPlaces = L.tileLayer(executionPlacesLayer, {minZoom: 13, maxZoom: 17, attribution: attrib});
+		
+		var	map = new L.Map('map', {
+				layers: [main],
+				center: [55.7610, 37.6283],
+				zoom: 16
+			});
+		map.setMaxBounds([[55.391, 37.075], [56.030, 38.188]]);
+		
+		//Add extra layer here
+		map.addLayer(prisons);
+	</script>
+</body>
+</html>

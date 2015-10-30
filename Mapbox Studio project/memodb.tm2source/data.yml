@@ -1,0 +1,567 @@
+_prefs: 
+  disabled: []
+  inspector: false
+  mapid: polivanov.8009906d
+  rev: s-538a45b1
+  saveCenter: true
+attribution: NextGIS
+center: 
+  - 37.6272
+  - 55.7558
+  - 14
+description: Datasource for memorial  project
+Layer: 
+  - id: landuse
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, way_area AS area, COALESCE(landuse, leisure, "natural", highway, amenity, tourism) AS type 
+          FROM planet_osm_polygon 
+          WHERE z(!scale_denominator!) >= 12 AND way && !bbox!
+          ORDER BY way_area DESC
+        ) AS data
+      type: postgis
+      user: memouser
+    description: landuse
+    fields: 
+      area: Number
+      type: String
+    properties: 
+      "buffer-size": 8
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: waterway_med
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, waterway AS type 
+          FROM planet_osm_line 
+          WHERE waterway IN ('river', 'canal', 'stream')
+            AND z(!scale_denominator!) IN (13,14) AND way && !bbox!
+        ) AS data
+      type: postgis
+      user: memouser
+    description: waterway_med
+    fields: 
+      type: String
+    properties: 
+      "buffer-size": 8
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: waterway_high
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, waterway AS type 
+          FROM planet_osm_line 
+          WHERE waterway IN ('river', 'canal', 'stream', 'ditch', 'drain')
+            AND z(!scale_denominator!) >= 14 AND way && !bbox!
+        ) AS data
+      type: postgis
+      user: memouser
+    description: waterway_high
+    fields: 
+      type: String
+    properties: 
+      "buffer-size": 16
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: water
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, way_area AS area 
+          FROM planet_osm_polygon 
+          WHERE "natural" IN ('water', 'pond') OR waterway IN ('basin', 'canal', 'mill_pond', 'pond', 'riverbank', 'stream')
+            AND z(!scale_denominator!) >= 12 AND way && !bbox!
+        ) AS data
+      type: postgis
+      user: memouser
+    description: water
+    fields: 
+      area: Number
+    properties: 
+      "buffer-size": 8
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: landuse_overlays
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, way_area AS area, COALESCE(leisure) AS type 
+          FROM planet_osm_polygon 
+          WHERE leisure = 'nature_reserve'
+            AND z(!scale_denominator!) >= 11 AND way && !bbox!
+          ORDER BY way_area DESC
+        ) AS data
+      type: postgis
+      user: memouser
+    description: landuse_overlays
+    fields: 
+      area: Number
+      type: String
+    properties: 
+      "buffer-size": 8
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: buildings
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, building AS type 
+          FROM planet_osm_polygon 
+          WHERE building NOT IN ('0','false', 'no')
+            AND z(!scale_denominator!) >= 14 AND way && !bbox!
+          ORDER BY ST_YMin(ST_Envelope(way)) DESC
+        ) AS data
+      type: postgis
+      user: memouser
+    description: buildings
+    fields: 
+      type: String
+    properties: 
+      "buffer-size": 8
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: aeroway
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, aeroway AS type 
+          FROM planet_osm_line 
+          WHERE aeroway IN ('apron', 'runway', 'taxiway')
+            AND z(!scale_denominator!) >= 11 AND way && !bbox!
+        ) AS data
+      type: postgis
+      user: memouser
+    description: aeroway
+    fields: 
+      type: String
+    properties: 
+      "buffer-size": 32
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: tunnel
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, COALESCE(highway, railway) AS type, 0 AS bridge, access, render, layer, 1 as tunnel, CASE
+            WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+            WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+            WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'    WHEN highway IN ('service', 'track') THEN 'service'    WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'    WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+            ELSE 'other' END AS stylegroup 
+          FROM 
+            ( SELECT *, '1_outline' AS render
+              FROM planet_osm_line 
+              WHERE tunnel NOT IN ('', '0', 'no') 
+              UNION ALL
+              SELECT *, '2_line' AS render
+              FROM planet_osm_line
+              WHERE tunnel NOT IN ('', '0', 'no')
+              UNION ALL
+              SELECT *, '3_inline' AS render
+              FROM planet_osm_line
+              WHERE tunnel NOT IN ('', '0', 'no')
+            ) AS tunnels
+          WHERE z(!scale_denominator!) >= 11 AND way && !bbox!
+          ORDER BY layer ASC, render ASC
+        ) AS data
+      type: postgis
+      user: memouser
+    description: tunnel
+    fields: 
+      access: String
+      bridge: Number
+      layer: String
+      render: String
+      stylegroup: String
+      tunnel: Number
+      type: String
+    properties: 
+      "buffer-size": 24
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: turning_circle_case
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way
+          FROM planet_osm_point
+          WHERE highway = 'turning_circle'
+            AND z(!scale_denominator!) >= 14 AND way && !bbox!
+        ) AS data
+      type: postgis
+      user: memouser
+    description: turning_circle_case
+    fields: {}
+    properties: 
+      "buffer-size": 24
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: roads_high
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, COALESCE(highway, railway) AS type, 0 AS tunnel, 0 AS bridge, access, 'fill' AS render,  CASE
+            WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+            WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+            WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+            WHEN highway IN ('service', 'track') THEN 'service'
+            WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+            WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+            ELSE 'other' END AS stylegroup
+          FROM planet_osm_line
+          WHERE (highway IS NOT NULL OR railway IS NOT NULL)
+            AND (tunnel IS NULL OR tunnel = 'no')
+            AND (bridge IS NULL OR bridge = 'no')
+            AND z(!scale_denominator!) >= 11 AND way && !bbox!
+          ORDER BY z_order
+        ) AS data
+      type: postgis
+      user: memouser
+    description: roads_high
+    fields: 
+      access: String
+      bridge: Number
+      render: String
+      stylegroup: String
+      tunnel: Number
+      type: String
+    properties: 
+      "buffer-size": 32
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: turning_circle_fill
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way
+          FROM planet_osm_point
+          WHERE highway = 'turning_circle'
+            AND z(!scale_denominator!) >= 14 AND way && !bbox!
+        ) AS data
+      type: postgis
+      user: memouser
+    description: turning_circle_fill
+    fields: {}
+    properties: 
+      "buffer-size": 24
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: bridge
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, COALESCE(highway, railway) AS type, 1 AS bridge, access, render, layer, 0 as tunnel, CASE
+            WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+            WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+            WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+            WHEN highway IN ('service', 'track') THEN 'service'
+            WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+            WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+            ELSE 'other' END AS stylegroup
+          FROM 
+            ( SELECT *, '1_outline' AS render
+              FROM planet_osm_line
+              WHERE bridge NOT IN ('', '0', 'no')
+              UNION ALL
+              SELECT *, '2_line' AS render
+              FROM planet_osm_line
+              WHERE bridge NOT IN ('', '0', 'no')
+              UNION ALL
+              SELECT *, '3_inline' AS render
+              FROM planet_osm_line
+              WHERE bridge NOT IN ('', '0', 'no')
+            ) AS bridges
+          WHERE z(!scale_denominator!) >= 11 AND way && !bbox!
+          ORDER BY layer ASC, render ASC
+        ) AS data
+      type: postgis
+      user: memouser
+    description: bridge
+    fields: 
+      access: String
+      bridge: Number
+      layer: String
+      render: String
+      stylegroup: String
+      tunnel: Number
+      type: String
+    properties: 
+      "buffer-size": 24
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: place
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, place AS type, name, z_order, population
+          FROM planet_osm_point
+          WHERE place in ('country', 'state', 'city', 'town', 'village', 'hamlet', 'suburb', 'neighbourhood', 'locality')
+            AND z(!scale_denominator!) >= 11 AND way && !bbox!
+          ORDER BY population DESC NULLS LAST
+        ) AS data
+      type: postgis
+      user: memouser
+    description: place
+    fields: 
+      name: String
+      population: String
+      type: String
+      z_order: Number
+    properties: 
+      "buffer-size": 64
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: area_label
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT COALESCE(landuse, leisure, "natural") AS type, name, way_area AS area, ST_PointOnSurface(way) AS way
+          FROM planet_osm_polygon
+          WHERE name IS NOT NULL AND ST_IsValid(way)
+            AND z(!scale_denominator!) >= 10 AND way && !bbox!
+          /*UNION ALL
+          SELECT 'building' AS type, name, way_area AS area, ST_PointOnSurface(way) AS way
+          FROM planet_osm_polygon
+          WHERE name IS NOT NULL AND building NOT IN ('', 'no', '0', 'false') AND ST_IsValid(way)
+            AND z(!scale_denominator!) >= 11 AND way && !bbox!*/
+          ORDER BY area DESC
+        ) AS data
+      type: postgis
+      user: memouser
+    description: area_label
+    fields: 
+      area: Number
+      name: String
+      type: String
+    properties: 
+      "buffer-size": 128
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: waterway_label
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: |-
+        ( SELECT way, waterway AS type, name
+          FROM planet_osm_line
+          WHERE waterway IN ('canal', 'river', 'stream') AND name IS NOT NULL
+            AND z(!scale_denominator!) >= 13 AND way && !bbox!
+        ) AS data
+      type: postgis
+      user: memouser
+    description: waterway_label
+    fields: 
+      name: String
+      type: String
+    properties: 
+      "buffer-size": 128
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: motorway_label
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: "( SELECT ST_LineMerge(ST_Union(way)) as way, type, name\n  FROM\n    ( SELECT way, type, COALESCE(both_names, name) AS name\n     FROM\n       ( SELECT way, highway AS type, name\n         FROM planet_osm_line\n         WHERE (name IS NOT NULL)\n           AND highway IN ('motorway', 'trunk')\n           AND z(!scale_denominator!) >= 11 AND way && !bbox!\n       ) AS osm_line\n     LEFT JOIN streets_names ON (lower(regexp_replace(osm_line.name, '\\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\\s*', '')) = lower(regexp_replace(streets_names.modern_name, '\\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\\s*', '')))\n    ) AS streets_labels\n  GROUP BY name, type\n) AS data"
+      type: postgis
+      user: memouser
+    description: motorway_label
+    fields: 
+      name: String
+      type: String
+    properties: 
+      "buffer-size": 256
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: mainroad_label
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: "( SELECT ST_LineMerge(ST_Union(way)) as way, type, name\n  FROM\n    ( SELECT way, type, COALESCE(both_names, name) AS name\n     FROM\n       ( SELECT way, highway AS type, name\n         FROM planet_osm_line\n         WHERE (name IS NOT NULL)\n           AND highway IN ('primary', 'secondary', 'tertiary')\n           AND z(!scale_denominator!) >= 13 AND way && !bbox!\n       ) AS osm_line\n     LEFT JOIN streets_names ON (lower(regexp_replace(osm_line.name, '\\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\\s*', '')) = lower(regexp_replace(streets_names.modern_name, '\\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\\s*', '')))\n    ) AS streets_labels\n  GROUP BY name, type\n) AS data"
+      type: postgis
+      user: memouser
+    description: mainroad_label
+    fields: 
+      name: String
+      type: String
+    properties: 
+      "buffer-size": 384
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  - id: minorroad_label
+    Datasource: 
+      dbname: memodb
+      extent: -20037508.34,-20037508.34,20037508.34,20037508.34
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: memo01
+      port: 5432
+      srid: ''
+      table: "( SELECT ST_LineMerge(ST_Union(way)) as way, type, name\n  FROM\n    ( SELECT way, type, COALESCE(both_names, name) AS name\n     FROM\n       ( SELECT way, highway AS type, name\n         FROM planet_osm_line\n         WHERE (name IS NOT NULL)\n           AND highway IN ('residential', 'unclassified', 'road', 'living_street', 'unknown')\n           AND z(!scale_denominator!) >= 14 AND way && !bbox!\n       ) AS osm_line\n     LEFT JOIN streets_names ON (lower(regexp_replace(osm_line.name, '\\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\\s*', '')) = lower(regexp_replace(streets_names.modern_name, '\\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\\s*', '')))\n    ) AS streets_labels\n  GROUP BY name, type\n) AS data"
+      type: postgis
+      user: memouser
+    description: minorroad_label
+    fields: 
+      name: String
+      type: String
+    properties: 
+      "buffer-size": 384
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+maxzoom: 14
+minzoom: 13
+name: memodb

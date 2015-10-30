@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Memorial. Territory of terror.</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" /> -->
+	<link rel="stylesheet" href="css/leaflet.css" />
+	<link rel="stylesheet" href="css/memoToT.css" />
+	<link rel="stylesheet" href="css/L.Control.History.css" />
+	<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<!--<script src="http://d3js.org/d3.v3.min.js"></script> -->
+	<!--<script src="http://d3js.org/queue.v1.min.js"></script> -->
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.7/leaflet.js"></script>
+	<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
+	<script src="js/L.Control.History.js"></script>
+	<script src="js/leaflet-hash.js"></script>
+
+</head>
+<body>
+	<div id="mapWidget">
+		<div id="sideblock">
+			<form id="layersControl">
+				<input type="checkbox" id="concentrationCamps" name="concentrationCamps" value="2">
+				<label for="concentrationCamps">Концлагеря 1920-х</label>
+				<input type="checkbox" id="burialPlaces" name="burialPlaces" value="6">
+				<label for="burialPlaces">Места захоронений</label>
+				<input type="checkbox" id="workingCamps" name="workingCamps" value="8">
+				<label for="workingCamps">Места принудительного труда 1920-х</label>
+				<input type="checkbox" id="executionPlaces" name="executionPlaces" value="10">
+				<label for="executionPlaces">Расстрельные дома</label>
+				<input type="checkbox" id="prisons" name="prisons" value="4">
+				<label for="prisons">Тюрьмы</label>
+			</form>
+		</div>
+		<div id="map" style="width: 960px; height: 500px">
+			<!-- <div class="legendPanel"><div class="legend"></div></div> -->
+		</div>
+	</div>
+	<script src="js/memoToT.js"></script>
+</body>
+</html>

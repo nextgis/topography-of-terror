@@ -1,0 +1,28 @@
+_prefs: 
+  mapid: polivanov.2677b958
+  saveCenter: true
+_properties: {}
+attribution: NextGIS
+bounds: 
+  - -180
+  - -85.0511
+  - 180
+  - 85.0511
+center: 
+  - 37.6227
+  - 55.7397
+  - 13
+description: style for memo
+format: "png8:m=h"
+interactivity_layer: ''
+layers: null
+maxzoom: 17
+minzoom: 13
+name: memo-light
+source: "tmsource:///home/saga/City-of-terror/Mapbox_Studio_project/memodb.tm2source"
+styles: 
+  - palette.mss
+  - base.mss
+  - roads.mss
+  - labels.mss
+template: ''

@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[]>
+<Map srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+
+<Parameters>
+  <Parameter name="attribution"><![CDATA[NextGIS]]></Parameter>
+  <Parameter name="center">37.6272,55.7558,14</Parameter>
+  <Parameter name="description"><![CDATA[Datasource for memorial  project]]></Parameter>
+  <Parameter name="format">pbf</Parameter>
+  <Parameter name="json"><![CDATA[{"vector_layers":[{"id":"landuse","description":"landuse","fields":{"area":"Number","type":"String"}},{"id":"waterway_med","description":"waterway_med","fields":{"type":"String"}},{"id":"waterway_high","description":"waterway_high","fields":{"type":"String"}},{"id":"water","description":"water","fields":{"area":"Number"}},{"id":"landuse_overlays","description":"landuse_overlays","fields":{"area":"Number","type":"String"}},{"id":"buildings","description":"buildings","fields":{"type":"String"}},{"id":"aeroway","description":"aeroway","fields":{"type":"String"}},{"id":"tunnel","description":"tunnel","fields":{"type":"String","bridge":"Number","access":"String","render":"String","layer":"String","tunnel":"Number","stylegroup":"String"}},{"id":"turning_circle_case","description":"turning_circle_case","fields":{}},{"id":"roads_high","description":"roads_high","fields":{"type":"String","tunnel":"Number","bridge":"Number","access":"String","render":"String","stylegroup":"String"}},{"id":"turning_circle_fill","description":"turning_circle_fill","fields":{}},{"id":"bridge","description":"bridge","fields":{"type":"String","bridge":"Number","access":"String","render":"String","layer":"String","tunnel":"Number","stylegroup":"String"}},{"id":"place","description":"place","fields":{"type":"String","name":"String","z_order":"Number","population":"String"}},{"id":"area_label","description":"area_label","fields":{"type":"String","name":"String","area":"Number"}},{"id":"waterway_label","description":"waterway_label","fields":{"type":"String","name":"String"}},{"id":"motorway_label","description":"motorway_label","fields":{"type":"String","name":"String"}},{"id":"mainroad_label","description":"mainroad_label","fields":{"type":"String","name":"String"}},{"id":"minorroad_label","description":"minorroad_label","fields":{"type":"String","name":"String"}}]}]]></Parameter>
+  <Parameter name="maxzoom">14</Parameter>
+  <Parameter name="minzoom">13</Parameter>
+  <Parameter name="name"><![CDATA[memodb]]></Parameter>
+</Parameters>
+
+
+<Layer name="landuse"
+  buffer-size="8"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, way_area AS area, COALESCE(landuse, leisure, "natural", highway, amenity, tourism) AS type 
+  FROM planet_osm_polygon 
+  WHERE z(!scale_denominator!) >= 12 AND way && !bbox!
+  ORDER BY way_area DESC
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="waterway_med"
+  buffer-size="8"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, waterway AS type 
+  FROM planet_osm_line 
+  WHERE waterway IN ('river', 'canal', 'stream')
+    AND z(!scale_denominator!) IN (13,14) AND way && !bbox!
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="waterway_high"
+  buffer-size="16"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, waterway AS type 
+  FROM planet_osm_line 
+  WHERE waterway IN ('river', 'canal', 'stream', 'ditch', 'drain')
+    AND z(!scale_denominator!) >= 14 AND way && !bbox!
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="water"
+  buffer-size="8"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, way_area AS area 
+  FROM planet_osm_polygon 
+  WHERE "natural" IN ('water', 'pond') OR waterway IN ('basin', 'canal', 'mill_pond', 'pond', 'riverbank', 'stream')
+    AND z(!scale_denominator!) >= 12 AND way && !bbox!
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="landuse_overlays"
+  buffer-size="8"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, way_area AS area, COALESCE(leisure) AS type 
+  FROM planet_osm_polygon 
+  WHERE leisure = 'nature_reserve'
+    AND z(!scale_denominator!) >= 11 AND way && !bbox!
+  ORDER BY way_area DESC
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="buildings"
+  buffer-size="8"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, building AS type 
+  FROM planet_osm_polygon 
+  WHERE building NOT IN ('0','false', 'no')
+    AND z(!scale_denominator!) >= 14 AND way && !bbox!
+  ORDER BY ST_YMin(ST_Envelope(way)) DESC
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="aeroway"
+  buffer-size="32"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, aeroway AS type 
+  FROM planet_osm_line 
+  WHERE aeroway IN ('apron', 'runway', 'taxiway')
+    AND z(!scale_denominator!) >= 11 AND way && !bbox!
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="tunnel"
+  buffer-size="24"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, COALESCE(highway, railway) AS type, 0 AS bridge, access, render, layer, 1 as tunnel, CASE
+    WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+    WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+    WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'    WHEN highway IN ('service', 'track') THEN 'service'    WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'    WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+    ELSE 'other' END AS stylegroup 
+  FROM 
+    ( SELECT *, '1_outline' AS render
+      FROM planet_osm_line 
+      WHERE tunnel NOT IN ('', '0', 'no') 
+      UNION ALL
+      SELECT *, '2_line' AS render
+      FROM planet_osm_line
+      WHERE tunnel NOT IN ('', '0', 'no')
+      UNION ALL
+      SELECT *, '3_inline' AS render
+      FROM planet_osm_line
+      WHERE tunnel NOT IN ('', '0', 'no')
+    ) AS tunnels
+  WHERE z(!scale_denominator!) >= 11 AND way && !bbox!
+  ORDER BY layer ASC, render ASC
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="turning_circle_case"
+  buffer-size="24"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way
+  FROM planet_osm_point
+  WHERE highway = 'turning_circle'
+    AND z(!scale_denominator!) >= 14 AND way && !bbox!
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="roads_high"
+  buffer-size="32"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, COALESCE(highway, railway) AS type, 0 AS tunnel, 0 AS bridge, access, 'fill' AS render,  CASE
+    WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+    WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+    WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+    WHEN highway IN ('service', 'track') THEN 'service'
+    WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+    WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+    ELSE 'other' END AS stylegroup
+  FROM planet_osm_line
+  WHERE (highway IS NOT NULL OR railway IS NOT NULL)
+    AND (tunnel IS NULL OR tunnel = 'no')
+    AND (bridge IS NULL OR bridge = 'no')
+    AND z(!scale_denominator!) >= 11 AND way && !bbox!
+  ORDER BY z_order
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="turning_circle_fill"
+  buffer-size="24"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way
+  FROM planet_osm_point
+  WHERE highway = 'turning_circle'
+    AND z(!scale_denominator!) >= 14 AND way && !bbox!
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="bridge"
+  buffer-size="24"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, COALESCE(highway, railway) AS type, 1 AS bridge, access, render, layer, 0 as tunnel, CASE
+    WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+    WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+    WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+    WHEN highway IN ('service', 'track') THEN 'service'
+    WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+    WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+    ELSE 'other' END AS stylegroup
+  FROM 
+    ( SELECT *, '1_outline' AS render
+      FROM planet_osm_line
+      WHERE bridge NOT IN ('', '0', 'no')
+      UNION ALL
+      SELECT *, '2_line' AS render
+      FROM planet_osm_line
+      WHERE bridge NOT IN ('', '0', 'no')
+      UNION ALL
+      SELECT *, '3_inline' AS render
+      FROM planet_osm_line
+      WHERE bridge NOT IN ('', '0', 'no')
+    ) AS bridges
+  WHERE z(!scale_denominator!) >= 11 AND way && !bbox!
+  ORDER BY layer ASC, render ASC
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="place"
+  buffer-size="64"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, place AS type, name, z_order, population
+  FROM planet_osm_point
+  WHERE place in ('country', 'state', 'city', 'town', 'village', 'hamlet', 'suburb', 'neighbourhood', 'locality')
+    AND z(!scale_denominator!) >= 11 AND way && !bbox!
+  ORDER BY population DESC NULLS LAST
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="area_label"
+  buffer-size="128"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT COALESCE(landuse, leisure, "natural") AS type, name, way_area AS area, ST_PointOnSurface(way) AS way
+  FROM planet_osm_polygon
+  WHERE name IS NOT NULL AND ST_IsValid(way)
+    AND z(!scale_denominator!) >= 10 AND way && !bbox!
+  /*UNION ALL
+  SELECT 'building' AS type, name, way_area AS area, ST_PointOnSurface(way) AS way
+  FROM planet_osm_polygon
+  WHERE name IS NOT NULL AND building NOT IN ('', 'no', '0', 'false') AND ST_IsValid(way)
+    AND z(!scale_denominator!) >= 11 AND way && !bbox!*/
+  ORDER BY area DESC
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="waterway_label"
+  buffer-size="128"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT way, waterway AS type, name
+  FROM planet_osm_line
+  WHERE waterway IN ('canal', 'river', 'stream') AND name IS NOT NULL
+    AND z(!scale_denominator!) >= 13 AND way && !bbox!
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="motorway_label"
+  buffer-size="256"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT ST_LineMerge(ST_Union(way)) as way, type, name
+  FROM
+    ( SELECT way, type, COALESCE(both_names, name) AS name
+     FROM
+       ( SELECT way, highway AS type, name
+         FROM planet_osm_line
+         WHERE (name IS NOT NULL)
+           AND highway IN ('motorway', 'trunk')
+           AND z(!scale_denominator!) >= 11 AND way && !bbox!
+       ) AS osm_line
+     LEFT JOIN streets_names ON (lower(regexp_replace(osm_line.name, '\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\s*', '')) = lower(regexp_replace(streets_names.modern_name, '\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\s*', '')))
+    ) AS streets_labels
+  GROUP BY name, type
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="mainroad_label"
+  buffer-size="384"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT ST_LineMerge(ST_Union(way)) as way, type, name
+  FROM
+    ( SELECT way, type, COALESCE(both_names, name) AS name
+     FROM
+       ( SELECT way, highway AS type, name
+         FROM planet_osm_line
+         WHERE (name IS NOT NULL)
+           AND highway IN ('primary', 'secondary', 'tertiary')
+           AND z(!scale_denominator!) >= 13 AND way && !bbox!
+       ) AS osm_line
+     LEFT JOIN streets_names ON (lower(regexp_replace(osm_line.name, '\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\s*', '')) = lower(regexp_replace(streets_names.modern_name, '\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\s*', '')))
+    ) AS streets_labels
+  GROUP BY name, type
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="minorroad_label"
+  buffer-size="384"
+  srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[memodb]]></Parameter>
+       <Parameter name="extent"><![CDATA[-20037508.34,-20037508.34,20037508.34,20037508.34]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[memo01]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[( SELECT ST_LineMerge(ST_Union(way)) as way, type, name
+  FROM
+    ( SELECT way, type, COALESCE(both_names, name) AS name
+     FROM
+       ( SELECT way, highway AS type, name
+         FROM planet_osm_line
+         WHERE (name IS NOT NULL)
+           AND highway IN ('residential', 'unclassified', 'road', 'living_street', 'unknown')
+           AND z(!scale_denominator!) >= 14 AND way && !bbox!
+       ) AS osm_line
+     LEFT JOIN streets_names ON (lower(regexp_replace(osm_line.name, '\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\s*', '')) = lower(regexp_replace(streets_names.modern_name, '\s*(улица|площадь|переулок|проезд|бульвар|набережная|шоссе)\s*', '')))
+    ) AS streets_labels
+  GROUP BY name, type
+) AS data]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[memouser]]></Parameter>
+    </Datasource>
+  </Layer>
+
+</Map>
